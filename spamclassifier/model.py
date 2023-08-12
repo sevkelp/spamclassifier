@@ -7,11 +7,11 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from perprocess import clean_text
+from spamclassifier.preprocess import clean_text#, custom_prepro
 
 def train(X,y):
     prepro = FunctionTransformer(lambda x : x['text'].apply(clean_text))
-
+    #prepro = custom_prepro()
     pipe = Pipeline([
         ('preprocess',prepro),
         ('tf_idf',TfidfVectorizer(ngram_range = (1,2), max_features = 200)),

@@ -19,6 +19,7 @@ dependencies = [
     'numpy',
     'pandas',
     'scikit-learn',
+    'nltk',
 ]
 
 [tool.setuptools]

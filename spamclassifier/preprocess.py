@@ -2,6 +2,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import string # "string" module is already installed with Python
 
+from sklearn.preprocessing import FunctionTransformer
+
 def clean_text(text):
     # Punctuation
     for punctuation in string.punctuation:
@@ -34,3 +36,6 @@ def clean_text(text):
     ]
 
     return ' '.join(text_ls)
+
+def custom_prepro():
+    return FunctionTransformer(lambda x : x['text'].apply(clean_text))
