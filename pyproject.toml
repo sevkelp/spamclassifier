@@ -25,4 +25,4 @@ dependencies = [
 packages = ["spamclassifier"]
 
 [project.urls]
-"Homepage" = ""
+"Homepage" = "https://github.com/sevkelp/spamclassifier"
