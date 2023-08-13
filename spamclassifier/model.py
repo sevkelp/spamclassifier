@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from spamclassifier.preprocess import clean_text#, custom_prepro
 
-def train(X,y):
+def train(X,y,save=True):
     prepro = FunctionTransformer(lambda x : x['text'].apply(clean_text))
     #prepro = custom_prepro()
     pipe = Pipeline([
@@ -18,15 +18,21 @@ def train(X,y):
         ('model',MultinomialNB(alpha=0.1,class_prior=(0.5,0.5)))
     ])
 
-    model = pipe.fit(X,y)
-    return model
+    pipe.fit(X,y)
+    if save:
+        filename = "../model/classifier.pickle"
+        pickle.dump(pipe, open(filename, "wb"))
+    return pipe
 
 def predict(model,text):
     label_dict = {0:'valid',1:'spam'}
     y_hat = model.predict(pd.DataFrame(text,columns=['text']))
     return pd.Series(y_hat).apply(lambda x : label_dict.get(x))
 
-def train_save(X,y):
-    model = train(X,y)
+def save(model):
     filename = "../model/classifier.pickle"
     pickle.dump(model, open(filename, "wb"))
+
+def train_save(X,y):
+    model = train(X,y)
+    save(model)
